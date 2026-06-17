@@ -1,0 +1,42 @@
+services:
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: e-imzo-id-card-nginx
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+
+  e-imzo-server:
+    build:
+      context: C:/e-imzo-server
+      dockerfile: Dockerfile
+    container_name: e-imzo-id-card-server
+    network_mode: "service:nginx"
+    command:
+      - java
+      - -Dfile.encoding=UTF-8
+      - -jar
+      - e-imzo-server.jar
+      - start
+      - -c
+      - test-config.properties
+    volumes:
+      - C:/e-imzo-server/test-config.properties:/opt/e-imzo-server/test-config.properties:ro
+    depends_on:
+      - nginx
+    restart: unless-stopped
+
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: e-imzo-id-card-webapp
+    network_mode: "service:nginx"
+    depends_on:
+      - nginx
+      - e-imzo-server
+    restart: unless-stopped

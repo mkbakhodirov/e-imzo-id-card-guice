@@ -1,0 +1,6 @@
+eimzo:
+  rest:
+    service:
+      host:
+        base: http://127.0.0.1:8080
+        challenger: http://localhost/frontend/challenge
