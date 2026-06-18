@@ -32,7 +32,7 @@ public class IdCardServlet extends ServletSupport {
             throws ServletException, IOException {
         switch (routePath(request)) {
             case "/demo/eimzoidcard", "/demo/eimzoidcard/" -> forward(request, response, "/demo/eimzoidcard/index.html");
-            case "/demo/eimzoidcard/user_auth_result.php" -> authResult(request, response);
+            case "/demo/eimzoidcard/user_auth_result" -> authResult(request, response);
             default -> response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
@@ -41,7 +41,7 @@ public class IdCardServlet extends ServletSupport {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             switch (routePath(request)) {
-                case "/demo/eimzoidcard/doc_verify_result.php" -> verifyResult(request, response);
+                case "/demo/eimzoidcard/doc_verify_result" -> verifyResult(request, response);
                 default -> response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } catch (Exception e) {

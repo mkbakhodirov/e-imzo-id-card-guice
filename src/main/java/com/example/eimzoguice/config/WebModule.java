@@ -19,8 +19,8 @@ public class WebModule extends ServletModule {
                 "/demo/",
                 "/demo/eimzoidcard",
                 "/demo/eimzoidcard/",
-                "/demo/eimzoidcard/user_auth_result.php",
-                "/demo/eimzoidcard/doc_verify_result.php"
+                "/demo/eimzoidcard/user_auth_result",
+                "/demo/eimzoidcard/doc_verify_result"
         ).with(IdCardServlet.class);
     }
 }

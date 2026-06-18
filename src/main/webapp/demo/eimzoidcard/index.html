@@ -421,7 +421,7 @@
                                                 if(!isMobileDevice()){	
                                                     hideQRcode();
                                                 }
-                                                window.location.href = 'user_auth_result.php?documentId='+documentId;
+                                                window.location.href = 'user_auth_result?documentId='+documentId;
                                             } else {
                                                 if(!isMobileDevice()){	
                                                     hideQRcode();
@@ -477,7 +477,7 @@
                                                     hideQRcode();
                                                 }
                                                 document.signForm.documentId.value=documentId;
-                                                document.getElementById("signForm").action ="doc_verify_result.php";
+                                                document.getElementById("signForm").action ="doc_verify_result";
                                                 document.getElementById("signForm").submit();
                                             } else {
                                                 if(!isMobileDevice()){	
