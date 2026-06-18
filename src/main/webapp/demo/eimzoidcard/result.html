@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="result" data-include-verification="{{includeVerificationInfo}}"></div>
+<form>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">JSON</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10">{{backendResponse}}</textarea>
+    </div>
+</form>
+<script>
+    (function () {
+        var result = document.getElementById('result');
+        var textarea = document.getElementById('exampleFormControlTextarea1');
+        var includeVerificationInfo = result.dataset.includeVerification === 'true';
+        var response;
+
+        try {
+            response = JSON.parse(textarea.value);
+        } catch (e) {
+            response = {
+                status: 0,
+                message: textarea.value
+            };
+        }
+
+        function displayValue(value) {
+            if (value === null || value === undefined) {
+                return '';
+            }
+            if (Array.isArray(value)) {
+                return value.map(displayValue).join(',');
+            }
+            if (typeof value === 'object') {
+                return JSON.stringify(value);
+            }
+            return String(value);
+        }
+
+        function row(key, value) {
+            var rowElement = document.createElement('div');
+            var keyColumn = document.createElement('div');
+            var valueColumn = document.createElement('div');
+
+            rowElement.className = 'row';
+            keyColumn.className = 'col-sm';
+            valueColumn.className = 'col-sm';
+            keyColumn.textContent = key;
+            valueColumn.textContent = displayValue(value);
+
+            rowElement.appendChild(keyColumn);
+            rowElement.appendChild(valueColumn);
+            return rowElement;
+        }
+
+        function appendObjectRows(container, object) {
+            if (!object) {
+                return;
+            }
+            Object.keys(object).forEach(function (key) {
+                container.appendChild(row(key, object[key]));
+            });
+        }
+
+        if (!response || response.status !== 1) {
+            var alert = document.createElement('div');
+            alert.className = 'alert alert-danger';
+            alert.setAttribute('role', 'alert');
+            alert.textContent = response && response.message ? response.message : '';
+            result.appendChild(alert);
+            return;
+        }
+
+        var container = document.createElement('div');
+        var certificateInfo = response.subjectCertificateInfo || {};
+
+        container.className = 'container';
+        container.appendChild(row('Certificate SN', certificateInfo.serialNumber));
+        container.appendChild(row('Certificate Validity', displayValue(certificateInfo.validFrom) + ' - ' + displayValue(certificateInfo.validTo)));
+        appendObjectRows(container, certificateInfo.subjectName);
+
+        if (includeVerificationInfo) {
+            appendObjectRows(container, response.verificationInfo);
+        }
+
+        result.appendChild(container);
+    }());
+</script>
+</body>
+</html>
