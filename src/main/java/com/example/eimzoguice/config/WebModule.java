@@ -20,10 +20,7 @@ public class WebModule extends ServletModule {
                 "/demo/eimzoidcard",
                 "/demo/eimzoidcard/",
                 "/demo/eimzoidcard/user_auth_result.php",
-                "/demo/eimzoidcard/doc_verify_result.php",
-                "/demo/eimzoidcard/frontend/mobile/auth",
-                "/demo/eimzoidcard/frontend/mobile/sign",
-                "/demo/eimzoidcard/frontend/mobile/status"
+                "/demo/eimzoidcard/doc_verify_result.php"
         ).with(IdCardServlet.class);
     }
 }

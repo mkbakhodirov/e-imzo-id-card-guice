@@ -41,9 +41,6 @@ public class IdCardServlet extends ServletSupport {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             switch (routePath(request)) {
-                case "/demo/eimzoidcard/frontend/mobile/auth" -> rawJson(response, mobileEImzoService.mobileAuth(request));
-                case "/demo/eimzoidcard/frontend/mobile/sign" -> rawJson(response, mobileEImzoService.mobileSign(request));
-                case "/demo/eimzoidcard/frontend/mobile/status" -> rawJson(response, mobileEImzoService.mobileStatus(request, requiredParameter(request, "documentId")));
                 case "/demo/eimzoidcard/doc_verify_result.php" -> verifyResult(request, response);
                 default -> response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
@@ -200,9 +197,4 @@ public class IdCardServlet extends ServletSupport {
         return object.get(member).getAsInt();
     }
 
-    private void rawJson(HttpServletResponse response, String body) throws IOException {
-        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        response.setContentType("application/json");
-        response.getWriter().write(body);
-    }
 }

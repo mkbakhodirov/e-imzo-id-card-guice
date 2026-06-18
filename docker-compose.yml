@@ -6,8 +6,18 @@ services:
       - "80:80"
       - "8080:8080"
       - "8081:8081"
+      - "6379:6379"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: e-imzo-id-card-redis
+    command: redis-server --requirepass test
+    network_mode: "service:nginx"
+    depends_on:
+      - nginx
     restart: unless-stopped
 
   e-imzo-server:
@@ -28,6 +38,7 @@ services:
       - C:/e-imzo-server/test-config.properties:/opt/e-imzo-server/test-config.properties:ro
     depends_on:
       - nginx
+      - redis
     restart: unless-stopped
 
   webapp:

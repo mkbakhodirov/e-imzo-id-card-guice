@@ -32,18 +32,6 @@ public class MobileEImzoService {
         }
     }
 
-    public String mobileAuth(HttpServletRequest request) throws IOException {
-        return post("/frontend/mobile/auth", request, Map.of());
-    }
-
-    public String mobileSign(HttpServletRequest request) throws IOException {
-        return post("/frontend/mobile/sign", request, Map.of());
-    }
-
-    public String mobileStatus(HttpServletRequest request, String documentId) throws IOException {
-        return post("/frontend/mobile/status", request, Map.of("documentId", documentId));
-    }
-
     public String authenticate(HttpServletRequest request, String documentId) throws IOException {
         return get("/backend/mobile/authenticate/" + encodePath(documentId), request);
     }

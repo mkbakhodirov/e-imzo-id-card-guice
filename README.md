@@ -20,6 +20,15 @@ The app keeps the original static ID-card QR UI and replaces the PHP result page
 docker compose up --build
 ```
 
+Redis is available for local development at:
+
+```text
+host=127.0.0.1
+port=6379
+password=test
+db=1
+```
+
 Open:
 
 ```text
