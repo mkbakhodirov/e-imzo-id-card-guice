@@ -14,8 +14,19 @@ services:
   redis:
     image: redis:7.4-alpine
     container_name: e-imzo-id-card-redis
-    command: redis-server --requirepass test
+    command:
+      - sh
+      - -c
+      - |
+        REDIS_PASSWORD=$$(sed -n 's/^mobile\.storage\.redis\.password=//p' /opt/e-imzo-server/test-config.properties | tail -n 1 | tr -d '\r')
+        if [ -z "$$REDIS_PASSWORD" ]; then
+          echo "mobile.storage.redis.password is missing in /opt/e-imzo-server/test-config.properties" >&2
+          exit 1
+        fi
+        exec redis-server --requirepass "$$REDIS_PASSWORD"
     network_mode: "service:nginx"
+    volumes:
+      - C:/e-imzo-server/test-config.properties:/opt/e-imzo-server/test-config.properties:ro
     depends_on:
       - nginx
     restart: unless-stopped
@@ -26,14 +37,7 @@ services:
       dockerfile: Dockerfile
     container_name: e-imzo-id-card-server
     network_mode: "service:nginx"
-    command:
-      - java
-      - -Dfile.encoding=UTF-8
-      - -jar
-      - e-imzo-server.jar
-      - start
-      - -c
-      - test-config.properties
+    command: java -Dfile.encoding=UTF-8 -jar e-imzo-server.jar start -c test-config.properties
     volumes:
       - C:/e-imzo-server/test-config.properties:/opt/e-imzo-server/test-config.properties:ro
     depends_on:
