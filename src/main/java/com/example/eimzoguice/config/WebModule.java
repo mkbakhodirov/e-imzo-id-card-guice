@@ -14,13 +14,6 @@ public class WebModule extends ServletModule {
         bind(Gson.class).in(Scopes.SINGLETON);
         bind(IdCardServlet.class).in(Scopes.SINGLETON);
 
-        serve(
-                "/demo",
-                "/demo/",
-                "/demo/eimzoidcard",
-                "/demo/eimzoidcard/",
-                "/demo/eimzoidcard/user_auth_result",
-                "/demo/eimzoidcard/doc_verify_result"
-        ).with(IdCardServlet.class);
+        serve("/", "/user_auth_result", "/doc_verify_result").with(IdCardServlet.class);
     }
 }

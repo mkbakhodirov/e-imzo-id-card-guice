@@ -3,16 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <base href="/demo/eimzoidcard/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
     <style>
         @font-face {
             font-family: 'OpenSans';
-            src: url('./fonts/OpenSans.woff') format('woff');
+            src: url('/fonts/OpenSans.woff') format('woff');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -20,7 +19,7 @@
 
         @font-face {
             font-family: 'OpenSans';
-            src: url('./fonts/OpenSans-Bold.woff') format('woff');
+            src: url('/fonts/OpenSans-Bold.woff') format('woff');
             font-weight: bold;
             font-style: normal;
             font-display: swap;
@@ -252,10 +251,10 @@
 
 
         <!--  QR-code  -->
-        <script type="text/javascript" src="./js/crc32.js"></script>
-        <script type="text/javascript" src="./js/pkcs.js"></script>
-        <script type="text/javascript" src="./js/qrcode.min.js"></script>
-        <script type="text/javascript" src="./js/e-imzo-mobile.js?v=1.1"></script>
+        <script type="text/javascript" src="/js/crc32.js"></script>
+        <script type="text/javascript" src="/js/pkcs.js"></script>
+        <script type="text/javascript" src="/js/qrcode.min.js"></script>
+        <script type="text/javascript" src="/js/e-imzo-mobile.js?v=1.1"></script>
 
         <script type="text/javascript">
 
@@ -421,7 +420,7 @@
                                                 if(!isMobileDevice()){	
                                                     hideQRcode();
                                                 }
-                                                window.location.href = 'user_auth_result?documentId='+documentId;
+                                                window.location.href = '/user_auth_result?documentId='+documentId;
                                             } else {
                                                 if(!isMobileDevice()){	
                                                     hideQRcode();
@@ -477,7 +476,7 @@
                                                     hideQRcode();
                                                 }
                                                 document.signForm.documentId.value=documentId;
-                                                document.getElementById("signForm").action ="doc_verify_result";
+                                                document.getElementById("signForm").action ="/doc_verify_result";
                                                 document.getElementById("signForm").submit();
                                             } else {
                                                 if(!isMobileDevice()){	

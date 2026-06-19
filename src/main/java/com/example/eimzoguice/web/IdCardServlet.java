@@ -29,8 +29,8 @@ public class IdCardServlet extends ServletSupport {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         switch (routePath(request)) {
-            case "/demo/eimzoidcard", "/demo/eimzoidcard/" -> forward(request, response, "/WEB-INF/views/demo/eimzoidcard/index.html");
-            case "/demo/eimzoidcard/user_auth_result" -> authResult(request, response);
+            case "/" -> forward(request, response, "/WEB-INF/views/index.html");
+            case "/user_auth_result" -> authResult(request, response);
             default -> response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
@@ -39,7 +39,7 @@ public class IdCardServlet extends ServletSupport {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             switch (routePath(request)) {
-                case "/demo/eimzoidcard/doc_verify_result" -> verifyResult(request, response);
+                case "/doc_verify_result" -> verifyResult(request, response);
                 default -> response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class IdCardServlet extends ServletSupport {
 
     private void resultPage(HttpServletResponse response, String backendResponse, boolean includeVerificationInfo)
             throws IOException {
-        html(response, "/WEB-INF/views/demo/eimzoidcard/result.html", Map.of(
+        html(response, "/WEB-INF/views/result.html", Map.of(
                 "backendResponse", backendResponse,
                 "includeVerificationInfo", String.valueOf(includeVerificationInfo)
         ));

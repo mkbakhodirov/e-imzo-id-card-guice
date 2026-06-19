@@ -54,7 +54,7 @@ http://localhost:8080/ping
 Рабочий веб-сайт:
 
 ```text
-https://example.uz/demo/eimzoidcard
+https://example.uz
 ```
 
 ## Подписание с телефона
