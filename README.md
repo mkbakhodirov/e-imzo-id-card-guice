@@ -1,61 +1,69 @@
 # E-IMZO ID Card Guice
 
-Java/Guice/Jetty conversion of the PHP demo at:
+Короткая инструкция для запуска проекта на Windows Local PC.
 
-```text
-example.uz/php/demo/eimzoidcard
+## Требования
+
+- Установлен и запущен Docker Desktop.
+- Порты `80`, `6379`, `8080`, `8081` свободны.
+- На компьютере есть папка `C:\e-imzo-server` с файлами распакованные с zip файла (файл находится на телеграм канале E-IMZO Knowledge Base https://t.me/c/1649793225/59).
+- Внутри `C:\e-imzo-server` должны быть `keys` и `test-config.properties`. Обращайтесь к Замире опа @baxaabdu.
+- Сформировать UPLOAD URL исходя из вашего веб домена, например https://example.uz/frontend/mobile/upload (Можно воспользоваться ngrok.com для локальной разработки). Получить SiteID на этот UPLOAD URL у Замиры опа.
+- На телефоне установлено приложение "E-IMZO (ID Карта)".
+
+## Настройка
+
+Добавьте в `C:\e-imzo-server\test-config.properties`:
+
+```properties
+# Пропишите свой SiteID
+mobile.siteId=0000
+
+mobile.storage.redis.host=127.0.0.1
+mobile.storage.redis.password=test
+mobile.storage.redis.db=1
 ```
 
-The app keeps the original static ID-card QR UI and replaces the PHP result pages with Java servlets.
+## Что входит в проект
 
-## Requirements
+Проект запускается через Docker Compose и использует:
 
-- Docker Desktop is installed and running.
-- Ports `80`, `8080`, and `8081` are free.
-- `C:\e-imzo-server` exists and contains `Dockerfile`, `e-imzo-server.jar`, `keys`, and `test-config.properties`.
+- `nginx`;
+- `redis`;
+- `e-imzo-server`;
+- Java web app на Guice и Jetty.
 
-## Run With Docker
+## Запуск
+
+Откройте терминал в папке текущего проекта `e-imzo-id-card-guice` и выполните:
 
 ```powershell
 docker compose up --build
 ```
 
-Redis is available for local development at:
+## Проверка
 
-```text
-host=127.0.0.1
-port=6379
-password=test
-db=1
-```
-
-Open:
-
-```text
-http://localhost/demo/eimzoidcard
-```
-
-E-IMZO server health check:
+API:
 
 ```text
 http://localhost:8080/ping
 ```
 
-## Run Jetty Locally
+Должен вернуть JSON.
 
-This starts only the Java web app on port `8081`; the app still expects E-IMZO server at `http://127.0.0.1:8080`.
-
-```powershell
-.\mvnw.cmd jetty:run
-```
-
-Open:
+Рабочий веб-сайт:
 
 ```text
-http://localhost:8081/demo/eimzoidcard
+https://example.uz/demo/eimzoidcard
 ```
 
-## Stop Docker
+## Подписание с телефона
+
+В приложении "E-IMZO (ID Карта)" включите dev mode и добавьте тестовый ключ.
+
+Откройте веб-сайт, отсканируйте QR код и подпишите документ в приложении.
+
+## Остановка
 
 ```powershell
 docker compose down
